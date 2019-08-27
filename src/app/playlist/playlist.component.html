@@ -1,0 +1,30 @@
+<header class="masthead text-black text-center">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <h1 class="mb-5">Join a existing playlist or create a new one!</h1>
+        <h4 class="mb-5"> To join a existing one, enter the identifier provided by the creator. You can only create one playlist at a time</h4>
+      </div>
+      <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+          <div class="form-row">
+            <div class="col-12 col-md-9 mb-2 mb-md-0">
+              <input [value]="identifierPlaylist" (input)="identifierPlaylist = $event.target.value" type="text"
+                     placeholder="Identifier" class="form-control form-control-lg">
+            </div>
+            <div class="col-12 col-md-3">
+              <button (click)="joinPlaylist()" type="submit" class="btn btn-block btn-lg btn-primary">Join Playlist</button>
+            </div>
+          </div>
+            <button [disabled]="hasPlaylist" (click)="createPlaylist()" class="btn btn-block btn-lg btn-primary mt-5"> Create New Playlist</button>
+      </div>
+    </div>
+  </div>
+  <ul class="playlists list-group mt-5">
+    <li class="list-group-item" *ngFor="let playlist of playlists"><button class="btn btn-primary mb-5" [routerLink]="['/playlist', playlist.identifier]">
+      {{playlist.identifier}}</button> <button class="btn btn-dark mb-5" *ngIf="isCreator(playlist)" (click)="deletePlaylist(playlist)"> - </button>
+    </li>
+  </ul>
+</header>
+
+
