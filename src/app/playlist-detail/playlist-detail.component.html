@@ -1,15 +1,18 @@
-<p>
-  <button class="btn btn-primary" (click)="goToPlaylists()">Back</button>
-</p>
-
 <div class="container col-md-10 col-lg-8 col-xl-7 mx-auto">
-<p class="text-primary"> {{error}}</p>
-  <h3>This is {{playlist.identifier}}</h3>
-  <p *ngIf="playlistOwner">Owner: {{playlistOwner.display_name}}
+  <p>
+    <button class="btn btn-primary" (click)="goToPlaylists()">Back</button>
   </p>
-  <div class="mb-5">
-  Members:
-    <li *ngFor="let member of members"> {{member.display_name}}</li>
+  <p class="text-primary"> {{error}}</p>
+  <h3 class="text-center">This is
+    {{playlist.identifier}}
+  </h3>
+  <div *ngIf="!playlist.is_default">
+    <p>Owner: {{playlistOwner.display_name}}
+    </p>
+    <div class="mb-5">
+      Members:
+      <li *ngFor="let member of members"> {{member.display_name}}</li>
+    </div>
   </div>
   <div>
     <input class="form-control form-control-lg form-primary" id="search" [value]="search" (keyup)="searchSong($event)"
@@ -23,52 +26,43 @@
   </div>
 
   <h2>Currently Playing</h2>
-  <div class="table-responsive">
-  <table *ngIf="songPlaying" class="table table-primary">
-    <thead>
-    <tr>
-      <th></th>
-      <th>Title</th>
-      <th>Artist</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td><img src="{{songPlaying.img}}"></td>
-      <td>{{songPlaying.title}}</td>
-      <td>{{songPlaying.artist}}</td>
-    </tr>
-    </tbody>
-  </table>
+  <div *ngIf="songPlaying" class="card" style="width: 18rem;">
+    <img src="{{songPlaying.img}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{songPlaying.title}}</h5>
+      <p class="card-text">{{songPlaying.artist}}</p>
+    </div>
+  </div>
 
-  <h2> QUEUE </h2>
-  <table class="table table-dark table-striped">
-    <thead>
-    <tr>
-      <th></th>
-      <th>Title</th>
-      <th>Artist</th>
-      <th>User</th>
-      <th>Votes</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let song of songs">
-      <td><img width="200px" height="200px" src="{{song.img}}"></td>
-      <td>{{song.title}}</td>
-      <td>{{song.artist}}</td>
-      <td>{{song.display_name}}</td>
-      <td>{{song.votes}}</td>
-      <td>
-        <button class="btn btn-primary" *ngIf="isAuthor(song)" (click)="removeSongFromPlaylist(song)"> Delete</button>
-      </td>
-      <td>
-        <button class="btn btn-primary" *ngIf="!isAuthor(song)" (click)="upvoteSong(song)"> +</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+
+  <div class="table-responsive">
+    <h2> QUEUE </h2>
+    <table class="table table-dark table-striped">
+      <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>User</th>
+        <th>Votes</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let song of songs">
+        <td><img width="200px" height="200px" src="{{song.img}}"></td>
+        <td>{{song.title}}</td>
+        <td>{{song.artist}}</td>
+        <td>{{song.display_name}}</td>
+        <td>{{song.votes}}</td>
+        <td>
+          <button class="btn btn-danger" *ngIf="isAuthor(song)" (click)="removeSongFromPlaylist(song)"> Delete</button>
+        </td>
+        <td>
+          <button class="btn btn-primary" *ngIf="!isAuthor(song)" (click)="upvoteSong(song)"> +</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>

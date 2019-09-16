@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 })
 export class PlaylistComponent implements OnInit {
   playlists: Playlist[];
+  defaultPlaylists: Playlist[];
   hasPlaylist: boolean;
   identifierPlaylist: string = '';
 
@@ -21,6 +22,8 @@ export class PlaylistComponent implements OnInit {
   ngOnInit() {
     // TODO CHECK IF USER IS IN DB, CREATE IF NOT
     this.getUserPlaylists();
+    this.getDefaultPlaylists();
+    //localStorage.removeItem("access_token");
   }
 
 
@@ -46,6 +49,14 @@ export class PlaylistComponent implements OnInit {
     this.playlistService.getUserPlaylist().subscribe((data: Playlist[]) => {
       this.playlists = data;
       this.userHasPlaylist();
+    }, error1 => {
+      return this.router.navigateByUrl('home');
+    });
+  }
+
+  getDefaultPlaylists() {
+    this.playlistService.getDefaultPlaylist().subscribe((data: Playlist[]) => {
+      this.defaultPlaylists = data;
     }, error1 => {
       return this.router.navigateByUrl('home');
     });

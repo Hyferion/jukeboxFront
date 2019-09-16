@@ -4,4 +4,5 @@ export class Playlist {
   public id;
   public identifier;
   public creator;
+  public is_default;
 }

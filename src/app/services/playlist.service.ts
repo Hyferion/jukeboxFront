@@ -31,6 +31,10 @@ export class PlaylistService {
     return this.httpClient.get<Playlist[]>(environment.BACKEND_IP_BASE + '/playlist', options);
   }
 
+  getDefaultPlaylist() {
+    return this.httpClient.get<Playlist[]>(environment.BACKEND_IP_BASE + '/playlistdefault');
+  }
+
   deletePlaylist(playlist: Playlist) {
     return this.httpClient.delete(environment.BACKEND_IP_BASE + '/playlist/' + playlist.identifier);
   }
